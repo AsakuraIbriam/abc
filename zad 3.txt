@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+#include <stdint.h>
+#include <math.h>
+
+
+
+
+
+
+int main()
+{
+
+    char c[501];
+    gets(c);
+
+     for(int i = 0; i < 500; i++) {
+
+        if(i%2 == 0) {
+            c[i] = (c[i] + 17) ;
+        }
+
+        if(i % 2 == 1) {
+                if(c[i] == '0') {
+                    c[i] = (c[i] - 15) ;
+
+                } else if(c[i] == '1') {
+                    c[i] = (c[i] - 14) ;
+                }else if(c[i] == '2') {
+                    c[i] = (c[i] - 3);
+                }else if(c[i] == '3') {
+                    c[i] = (c[i] + 75);
+                }else if(c[i] == '4') {
+                    c[i] = (c[i] + 9);
+                }else if(c[i] == '5') {
+                    c[i] = (c[i] -9);
+                }else if(c[i] == '6') {
+                    c[i] = (c[i] + 38);
+                }else if(c[i] == '7') {
+                    c[i] = (c[i] + 7);
+                }else if(c[i] == '8') {
+                    c[i] = (c[i] - 10);
+                } else {
+                    c[i] = (c[i] - 13);
+                }
+        }
+
+        }
+
+
+
+    puts(c);
+
+
+
+
+
+ return 0;
+}
+
+
