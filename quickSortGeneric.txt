@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+
+
+
+
+
+
+
+int comparator(const void *a, const void *b);
+void quickSort(void * arr, size_t countElements, size_t sizeElements, int (*cmp)(const void *a, const void *b));
+void qSort(void * arr, size_t stIndex, size_t endIndex, int (*compare)(const void *a, const void *b), size_t elementSize);
+size_t divider(void * arr, size_t st, size_t end, int (*cmp)(const void *a, const void*b), size_t elementSize);
+void swap(void * a, void * b, size_t sizeElement);
+
+
+
+
+int main()
+{
+
+
+        int pages[10] ={300, 200, 500, 870, 1354, 1982, 1123, 565, 837, 1553};
+        size_t nElements = sizeof(pages) / sizeof(pages[0]);
+        size_t element = sizeof(pages[0]);
+
+
+
+          quickSort(pages, nElements, element, comparator);
+
+            for (int n = 0; n < 5; n++) {
+                printf("%d\n", pages[n]);
+            }
+
+
+
+ return 0;
+}
+
+
+
+void quickSort(void * arr, size_t countElements, size_t sizeElements, int (*cmp)(const void *a, const void *b)){ 
+
+    qSort(arr, 0, (countElements - 1)*sizeElements, cmp, sizeElements);
+}
+//Рекурсивно се извиква докато началния индекс и по-малък от крайния
+void qSort(void * arr, size_t stIndex, size_t endIndex, int (*compare)(const void *a, const void *b), size_t elementsSize) {
+    size_t splt = 0;
+    if(stIndex < endIndex) {
+        splt = divider(arr, stIndex, endIndex, compare, elementsSize);
+        qSort(arr, stIndex, splt - elementsSize, compare, elementsSize);
+        qSort(arr, splt - elementsSize, endIndex, compare, elementsSize);
+    }
+
+}
+
+//Връща мястото до което е стигнал end при декрементация докато st < end, size_t индекса в масива като байтове
+
+size_t divider(void * arr, size_t st, size_t end, int (*cmp)(const void *a, const void*b), size_t elementSize) { 
+    void * pivot = arr + st;
+    while(st < end) {
+        while (cmp((arr + st), pivot) == 0 || cmp((arr + st), pivot) == -1){
+            st+=elementSize;
+        }
+        while(cmp((arr + end), pivot) == 1) {
+            end-=elementSize;
+        }
+        if(st < end) {
+            swap(arr + st, arr + end, elementSize);
+        }
+    }
+    swap(pivot, arr + end, elementSize);
+        return end;
+
+
+}
+
+//Размяна на елементите, когато st индекса стане по-малък от end и размяна на pivot с arr + end, когато pivot стане по-малко от end, извън цикълът
+void swap(void * a, void * b, size_t sizeElement) {
+    uint8_t hp[sizeElement];
+    memcpy(hp, a, sizeElement);
+    memcpy(a, b, sizeElement);
+    memcpy(b, hp, sizeElement);
+}
+
+//Компаратор за int тип масив
+int comparator(const void *a, const void *b){
+return *((int *)a) - *((int *)b);
+}
+
